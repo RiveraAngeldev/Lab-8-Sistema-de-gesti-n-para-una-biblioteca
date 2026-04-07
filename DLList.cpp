@@ -47,35 +47,35 @@ void DLList:: deleteAllButTail()
 {
 
 }
-	void DLList::deleteAllButHead()
-    {
+void DLList::deleteAllButHead() 
+{
 
-    }
-	string DLList:: findBookByTitle(string)
-    {
+}
+string DLList:: findBookByTitle(string)
+{
 
-    }
-	void DLList:: deleteBookByTitle(string)
-    {
+}
+void DLList:: deleteBookByTitle(string)
+{
 
-    }
-	void DLList:: setBook(string, string, string)
-    {
+}
+void DLList:: setBook(string, string, string)
+{
 
-    }
-	void DLList::printBooksByAuthor(string)
-    {
+}
+void DLList::printBooksByAuthor(string)
+{
 
-    }
-	void DLList:: showBooks()
-    {
+}
+void DLList:: showBooks()
+{
 
-    }
-	void DLList:: deleteAllTheBooks()
-    {
+}
+void DLList:: deleteAllTheBooks()
+{
 
-    }
-	int DLList:: obtainSize() const
-    {
-        
-    }
+}
+int DLList:: obtainSize() const
+{
+
+}
