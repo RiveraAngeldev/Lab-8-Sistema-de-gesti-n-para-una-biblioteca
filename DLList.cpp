@@ -1,41 +1,108 @@
+#include <iostream>
 #include "DLList.h"
+using namespace std;
+
 
 //Constructor
-DLList::DLList()
+DLList::DLList() : head(nullptr), tail(nullptr), size(0)
 {
 
 }
 
-//Deesctructor
+//Desctructor
 DLList::~DLList()
 {
-
+    deleteAllTheBooks();
 }
 
 //Basic Functions
-void DLList::addToHead(string, string)
+void DLList::addToHead(string title, string author)
 {
+    books*  newBook = new books(title,author, head, nullptr);
 
+    if (isEmpty())
+    {
+        head = tail = newBook;
+    }
+    else
+    {
+        head -> setPrev(newBook);
+
+        head = newBook; 
+    }
+
+    size++;
 }
 
-void DLList::addToTail(string, string)
+void DLList::addToTail(string title, string author)
 {
+     books*  newBook = new books(title,author, head, nullptr);
 
+    if (isEmpty())
+    {
+        head = tail = newBook;
+    }
+    else
+    {
+        tail -> setNext(newBook);
+
+        tail = newBook; 
+    }
+
+    size++;
 }
 
 void DLList::deleteFromHead()
-{
+{   
+    if(isEmpty())
+    {
+        cout << "List is empty" << endl;
+        return;
+    }
+    
+    books* temp = head;
 
+    if(head = tail)
+    {
+        head = tail = nullptr;
+    }
+    else
+    {
+        head = head->getNext();
+        head->setPrev(nullptr);
+    }
+
+    delete temp;
+    size--;
 }
 
 void DLList::deleteFromTail()
 {
+    if(isEmpty())
+    {
+        cout << "List is empty" << endl;
+        return;
+    }
+    
+    books* temp = tail;
 
+    if(tail = head)
+    {
+        head = tail = nullptr;
+    }
+    else
+    {
+        tail = tail->getPrev();
+        tail->setNext(nullptr);
+    }
+
+    delete temp;
+    size--;
 }
 
 bool DLList::isEmpty()
 {
-
+    return size == 0;
 }
 
 //Required Functions for the Lab
@@ -77,5 +144,5 @@ void DLList:: deleteAllTheBooks()
 }
 int DLList:: obtainSize() const
 {
-
+    return size;
 }
