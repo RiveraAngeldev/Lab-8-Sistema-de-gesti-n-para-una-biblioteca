@@ -110,38 +110,79 @@ void DLList::sortInsert(books*)
 {
 
 }
+
 void DLList:: deleteAllButTail()
 {
-
+    if( isEmpty() || head == tail) return;
+    while(head != tail){
+        deleteFromHead();
+    }
 }
+
 void DLList::deleteAllButHead() 
 {
-
+    if(isEmpty() || head == tail) return;
+    while(head != tail) {
+        deleteFromTail();
+    }
 }
-string DLList:: findBookByTitle(string)
-{
 
+string DLList:: findBookByTitle(string title)
+{
+    books *temp = head;
+    while(temp != nullptr) {
+        if(temp->getTitle() == title) {
+            return "Title found: " + temp->getTitle() + " by " + temp->getAuthor();
+        }
+        temp = temp->getNext();
+    }
+    return "Book not found with title: " + title;
 }
 void DLList:: deleteBookByTitle(string)
 {
 
 }
-void DLList:: setBook(string, string, string)
-{
 
+void DLList:: setBook(string oldTitle, string newTitle, string newAuthor)
+{
+    books *temp = head;
+    while(temp != nullptr) {
+        if(temp->getTitle() == oldTitle) {
+            temp->setTitle(newTitle);
+            temp->setAuthor(newAuthor);
+            return;
+        }
+        temp = temp->getNext();
+    }
+    cout << "The book you're looking for cannot be found."<< endl;
 }
+
 void DLList::printBooksByAuthor(string)
 {
 
 }
+
 void DLList:: showBooks()
 {
-
+    if(isEmpty()) {
+        cout << "The list is empty." << endl;
+        return;
+    }
+    books* temp = head;
+    while(temp != nullptr) {
+        cout << temp->getTitle() << " by " << temp->getAuthor() << endl;
+        temp = temp->getNext();
+    }
 }
+
 void DLList:: deleteAllTheBooks()
 {
-
+    while(!isEmpty())
+    {
+        deleteFromHead();
+    }
 }
+
 int DLList:: obtainSize() const
 {
     return size;
