@@ -1,4 +1,6 @@
 #include <iostream>
+#include <algorithm>
+#include <cctype>
 #include "DLList.h"
 using namespace std;
 
@@ -290,4 +292,10 @@ void DLList:: deleteAllTheBooks()
 int DLList:: obtainSize() const
 {
     return size;
+}
+
+void DLList::toLowerCase(string& s) {
+    for (int i = 0; i < s.length(); i++) {
+        s[i] = (char)tolower((unsigned char)s[i]);
+    }
 }
