@@ -11,7 +11,7 @@ books::books(const string &t, const string &a, books* n, books* p) {
     books::next = n;
     books::prev = p;
 }
-
+ 
 //Getters
 string books::getTitle() const {
     return books::title;
@@ -21,11 +21,11 @@ string books::getAuthor() const {
     return books::author;
 }
 
-books*::books::getNext() const {
+books* books::getNext() const {
     return books::next;
 }
 
-books*::books::getPrev() const {
+books* books::getPrev() const {
     return books::prev;
 }
 
