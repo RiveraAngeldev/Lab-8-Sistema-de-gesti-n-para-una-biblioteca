@@ -36,7 +36,7 @@ void DLList::addToHead(string title, string author)
 
 void DLList::addToTail(string title, string author)
 {
-     books*  newBook = new books(title,author, head, nullptr);
+     books*  newBook = new books(title,author,nullptr, tail);
 
     if (isEmpty())
     {
@@ -62,7 +62,7 @@ void DLList::deleteFromHead()
     
     books* temp = head;
 
-    if(head = tail)
+    if(head == tail)
     {
         head = tail = nullptr;
     }
@@ -86,7 +86,7 @@ void DLList::deleteFromTail()
     
     books* temp = tail;
 
-    if(tail = head)
+    if(tail == head)
     {
         head = tail = nullptr;
     }
@@ -106,8 +106,51 @@ bool DLList::isEmpty()
 }
 
 //Required Functions for the Lab
-void DLList::sortInsert(books*)
+void DLList::sortInsert(books* newBook)
 {
+    if (newBook == nullptr) return; 
+
+    
+    newBook->setNext(nullptr);
+    newBook->setPrev(nullptr);
+
+    if (isEmpty())
+    {
+        head = tail = newBook;
+        size++;
+        return;
+    }
+
+   
+    books* current = head;
+    while (current != nullptr && current->getTitle() < newBook->getTitle())
+        current = current->getNext();
+
+    if (current == nullptr)
+    {
+        
+        newBook->setPrev(tail);
+        tail->setNext(newBook);
+        tail = newBook;
+    }
+    else if (current == head)
+    {
+        
+        newBook->setNext(head);
+        head->setPrev(newBook);
+        head = newBook;
+    }
+    else
+    {
+        // Middle insertion: splice between current->prev and current.
+        books* prevNode = current->getPrev();
+        newBook->setNext(current);      // newBook points forward to current.
+        newBook->setPrev(prevNode);     // newBook points back to prevNode.
+        prevNode->setNext(newBook);     // prevNode now points forward to newBook.
+        current->setPrev(newBook);      // current now points back to newBook.
+    }
+
+    size++;
 
 }
 
@@ -138,9 +181,50 @@ string DLList:: findBookByTitle(string title)
     }
     return "Book not found with title: " + title;
 }
-void DLList:: deleteBookByTitle(string)
-{
 
+void DLList:: deleteBookByTitle(string searchTitle)
+{
+     toLowerCase(searchTitle);
+
+    books* current = head;
+    while (current != nullptr)
+    {
+        string currentTitle = current->getTitle();
+        toLowerCase(currentTitle);
+
+        if (currentTitle == searchTitle)
+        {
+            if (current == head && current == tail)
+            {
+                // Only node in the list.
+                head = tail = nullptr;
+            }
+            else if (current == head)
+            {
+                head = current->getNext();
+                head->setPrev(nullptr);
+            }
+            else if (current == tail)
+            {
+                tail = current->getPrev();
+                tail->setNext(nullptr);
+            }
+            else
+            {
+                // Middle node: bypass it by linking its neighbors to each other.
+                current->getPrev()->setNext(current->getNext());
+                current->getNext()->setPrev(current->getPrev());
+            }
+
+            delete current;
+            size--;
+            return; // Done, exit after deleting the first match.
+        }
+
+        current = current->getNext();
+    }
+
+    cout << "Book not found.\n";
 }
 
 void DLList:: setBook(string oldTitle, string newTitle, string newAuthor)
@@ -157,9 +241,29 @@ void DLList:: setBook(string oldTitle, string newTitle, string newAuthor)
     cout << "The book you're looking for cannot be found."<< endl;
 }
 
-void DLList::printBooksByAuthor(string)
+void DLList::printBooksByAuthor(string searchAuthor)
 {
+     toLowerCase(searchAuthor);
+    bool found = false;
 
+    books* current = head;
+    while (current != nullptr)
+    {
+        string currentAuthor = current->getAuthor();
+        toLowerCase(currentAuthor);
+
+        if (currentAuthor == searchAuthor)
+        {
+            cout << "Title: " << current->getTitle()
+                 << " | Author: " << current->getAuthor() << "\n";
+            found = true; // Mark that at least one match was found.
+        }
+
+        current = current->getNext();
+    }
+
+    if (!found)
+        cout << "No books found for that author.\n";
 }
 
 void DLList:: showBooks()
