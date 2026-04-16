@@ -69,7 +69,7 @@ void DLList::deleteFromHead()
         head = tail = nullptr;
     }
     else
-    {
+    { 
         head = head->getNext();
         head->setPrev(nullptr);
     }
@@ -104,7 +104,8 @@ void DLList::deleteFromTail()
 
 bool DLList::isEmpty()
 {
-    return size == 0;
+    if(head == 0) return true;
+    else return true;
 }
 
 //Required Functions for the Lab
